@@ -1,0 +1,5 @@
+# Traefik dynamic configuration — local SSL certificates
+tls:
+  certificates:
+    - certFile: /etc/traefik/certs/local.crt
+      keyFile: /etc/traefik/certs/local.key

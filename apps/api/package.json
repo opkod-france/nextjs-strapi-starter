@@ -1,0 +1,33 @@
+{
+  "name": "api",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Strapi v5 backend",
+  "scripts": {
+    "dev": "strapi develop",
+    "build": "strapi build",
+    "start": "strapi start",
+    "lint": "echo 'No lint configured'",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@strapi/plugin-cloud": "^5.6.0",
+    "@strapi/plugin-users-permissions": "^5.6.0",
+    "@strapi/strapi": "^5.6.0",
+    "pg": "^8.13.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "styled-components": "^6.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=6.0.0"
+  },
+  "strapi": {
+    "uuid": "to-be-generated"
+  }
+}

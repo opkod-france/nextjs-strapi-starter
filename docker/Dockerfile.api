@@ -1,0 +1,29 @@
+FROM node:22-alpine AS base
+RUN corepack enable && corepack prepare yarn@1.22.22 --activate
+WORKDIR /app
+
+# Install deps
+COPY apps/api/package.json ./
+RUN yarn install --frozen-lockfile --production=false
+
+# Copy source
+COPY apps/api/ .
+
+# Build
+RUN yarn build
+
+# Production
+FROM node:22-alpine AS production
+RUN corepack enable && corepack prepare yarn@1.22.22 --activate
+WORKDIR /app
+ENV NODE_ENV=production
+
+COPY --from=base /app/package.json ./
+RUN yarn install --frozen-lockfile --production
+COPY --from=base /app/dist ./dist
+COPY --from=base /app/config ./config
+COPY --from=base /app/src ./src
+COPY --from=base /app/public ./public
+
+EXPOSE 1337
+CMD ["yarn", "start"]
