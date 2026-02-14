@@ -62,16 +62,7 @@ else
   echo "  · APP_KEYS already set"
 fi
 
-# 3. Generate local SSL certificates
-echo ""
-if [ ! -f "$ROOT_DIR/docker/certs/local.crt" ]; then
-  echo "→ Generating local SSL certificates..."
-  bash "$ROOT_DIR/scripts/generate-certs.sh"
-else
-  echo "→ SSL certificates already exist, skipping."
-fi
-
-# 4. Install dependencies
+# 3. Install dependencies
 echo ""
 echo "→ Installing dependencies..."
 cd "$ROOT_DIR" && yarn install --ignore-engines
@@ -81,7 +72,7 @@ echo "────────────────────────�
 echo "  Setup complete!"
 echo ""
 echo "  Next steps:"
-echo "    1. docker compose up -d    (start PostgreSQL + Traefik)"
+echo "    1. docker compose up -d    (start PostgreSQL)"
 echo "    2. yarn dev                (start dev servers)"
 echo "    3. Open https://api.localhost/admin to create your Strapi admin"
 echo "    4. Open https://app.localhost for the frontend"

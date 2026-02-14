@@ -1,27 +1,4 @@
 services:
-  traefik:
-    image: traefik:v3.3
-    restart: unless-stopped
-    command:
-      - --api.insecure=true
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --entrypoints.web.http.redirections.entrypoint.to=websecure
-      - --entrypoints.web.http.redirections.entrypoint.scheme=https
-      - --certificatesresolvers.local.acme.tlschallenge=false
-    ports:
-      - "${TRAEFIK_HTTP_PORT:-80}:80"
-      - "${TRAEFIK_HTTPS_PORT:-443}:443"
-      - "${TRAEFIK_DASHBOARD_PORT:-8080}:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./docker/certs:/etc/traefik/certs:ro
-      - ./docker/traefik-dynamic.yml:/etc/traefik/dynamic/traefik-dynamic.yml:ro
-    labels:
-      - traefik.enable=true
-
   postgres:
     image: postgres:16-alpine
     restart: unless-stopped
@@ -38,6 +15,13 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - default
+      - nss-traefik
 
 volumes:
   postgres-data:
+
+networks:
+  nss-traefik:
+    external: true
